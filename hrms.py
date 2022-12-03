@@ -13,7 +13,7 @@ from selenium.webdriver.chrome.options import Options
 username = password = savecredential = ""
 useprevious = False
 # showbrowser = input("Hiện trình duyệt lúc chạy script (mặc định Y | N): ")
-if file_exists('password1.txt')==False:
+if file_exists('secret.txt')==False:
     username = input('Nhập tài khoản (evncpc\\taikhoan): ')
     password = getpass.getpass('Nhập mật khẩu: ')
     savecredential = input("Lưu mật khẩu cho lần chạy tiếp theo (mặc định Y | N): ")
@@ -24,7 +24,7 @@ if file_exists('password1.txt')==False:
             fernet = Fernet(key)
             encuname = fernet.encrypt(username.encode())
             encpasswd = fernet.encrypt(password.encode())
-            f = open("password1.txt",'w')
+            f = open("secret.txt",'w')
             f.write(str(key,encoding='utf-8'))
             f.write('\n')
             f.write(str(encuname,encoding='utf-8'))
@@ -39,7 +39,7 @@ if file_exists('password1.txt')==False:
 else:
     try:
         print("Using previous password")
-        f = open("password1.txt",'r')
+        f = open("secret.txt",'r')
         lines = f.readlines()
         if len(lines)==3:
             fernet = Fernet(str(lines[0]))
